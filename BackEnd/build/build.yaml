@@ -4,12 +4,12 @@ trigger:
     - master 
   paths:
     include: 
-    - '/azdevopsautomecicd/BackEnd/*'
+    - '/BackEnd/*'
 
 pr: 
   paths: 
     include: 
-    - '/azdevopsautomecicd/BackEnd/*'
+    - '/BackEnd/*'
 
 pool:
   name: Azure Pipelines
@@ -41,19 +41,19 @@ steps:
   displayName: Restore
   inputs:
     command: restore
-    projects: '$(build.sourcesdirectory)/azdevopsautomecicd/BackEnd/**/*.csproj'
+    projects: '$(build.sourcesdirectory)/BackEnd/**/*.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    projects: '$(build.sourcesdirectory)/azdevopsautomecicd/BackEnd/**/*.csproj'
+    projects: '$(build.sourcesdirectory)/BackEnd/**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: Test
   inputs:
     command: test
-    projects: '$(build.sourcesdirectory)/azdevopsautomecicd/BackEnd/**/*[Tt]est*/*.csproj'
+    projects: '$(build.sourcesdirectory)/BackEnd/**/*[Tt]est*/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 
 - task: DotNetCoreCLI@2
@@ -75,12 +75,12 @@ steps:
   displayName: 'Publish deployment PS script'
   inputs:
     ArtifactName:  'infrastructure-scripts'
-    PathtoPublish: '$(build.sourcesdirectory)/azdevopsautomecicd/BackEnd/infrastructure/'
+    PathtoPublish: '$(build.sourcesdirectory)/BackEnd/infrastructure/'
   condition: succeededOrFailed()
 
 # - task: PublishBuildArtifacts@1
 #   displayName: 'Publish deployment PS script'
 #   inputs:
 #     ArtifactName:  'deploy'
-#     PathtoPublish: '$(build.sourcesdirectory)/azdevopsautomecicd/BackEnd/infrastructure/'
+#     PathtoPublish: '$(build.sourcesdirectory)/BackEnd/infrastructure/'
 #   condition: succeededOrFailed()
