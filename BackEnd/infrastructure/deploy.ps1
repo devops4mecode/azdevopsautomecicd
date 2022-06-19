@@ -13,20 +13,10 @@ How to publish?
 ---------------
 dotnet publish  --configuration Release --output %temp%\azdevopsautomecicd WebApplication1.csproj
 #>
-# Login
-Write-Host "Login"
-
-$username = '$(USR)'
-$password= '$(PWD)'
-
-$SecurePassword = ConvertTo-SecureString $password -AsPlainText -Force
-
-$credentials = New-Object System.Management.Automation.PSCredential($username, $SecurePassword)
-
-Login-AzAccount -Credential $credentials
 
 Write-Host "Deploy to $pathtozip"
 
 #azdevopsautomecicd.zip
-az webapp deploy --name $WebAppName --resource-group $ResourceGroup --src-path $pathtozip --type zip
-az webapp start --name $WebAppName --resource-group $ResourceGroup
+$ctx=Get-AzContext
+az webapp deploy --name $WebAppName --resource-group $ResourceGroup --src-path $pathtozip --type zip --subscription $ctx.Subscription.Id
+az webapp start --name $WebAppName --resource-group $ResourceGroup  --subscription $ctx.Subscription.Id

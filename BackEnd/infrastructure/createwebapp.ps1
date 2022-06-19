@@ -7,27 +7,17 @@ $NumOfWorkers=2
 $PlanSKu="FREE"
 
 
-# Login
-$username = '$(USR)'
-$password= '$(PWD)'
-
-$SecurePassword = ConvertTo-SecureString $password -AsPlainText -Force
-
-$credentials = New-Object System.Management.Automation.PSCredential($username, $SecurePassword)
-
-Login-AzAccount -Credential $credentials
-
-
+$ctx=Get-AzContext
 New-AzResourceGroup -Name $ResourceGroup  -Location $Location -Force
 
 function CreatePlan(){
     Write-Host "Creating plan $PlanName"
-    az appservice plan create --name $PlanName --resource-group $ResourceGroup --sku $PlanSKu --number-of-workers $NumOfWorkers
+    az appservice plan create --name $PlanName --resource-group $ResourceGroup --sku $PlanSKu --number-of-workers $NumOfWorkers --subscription $ctx.Subscription.Id
 }
 
 function CreateWebApp(){
     Write-Host "Creating Web App $WebAppName"
-    az webapp create --name $WebAppName --plan $PlanName --resource-group $ResourceGroup  
+    az webapp create --name $WebAppName --plan $PlanName --resource-group $ResourceGroup --subscription $ctx.Subscription.Id    
 }
 
 function CreateAppSettings(){
