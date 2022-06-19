@@ -6,7 +6,7 @@ $ErrorActionPreference="Stop"
 $NumOfWorkers=2
 $PlanSKu="FREE"
 
-# Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
+Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
 
 $ctx=Get-AzContext
 New-AzResourceGroup -Name $ResourceGroup  -Location $Location -Force
