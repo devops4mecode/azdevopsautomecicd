@@ -1,6 +1,7 @@
 ### DDT Automate Azure DevOps Pipeline
 
 ## Code Folder/File Structure (Monorepo)
+```
 |                       
 +---BackEnd
 |   +---build
@@ -23,3 +24,6 @@
 |   |       
 |   \---src
 |
+
+```
+

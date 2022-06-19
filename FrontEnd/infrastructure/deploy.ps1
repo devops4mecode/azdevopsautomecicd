@@ -12,13 +12,13 @@ The ZIP file should contain the assemblies at the very top level, i.e. not in an
 
 How to publish?
 ---------------
-dotnet publish  --configuration Release --output %temp%\DemoWebAppWithCiCd WebApplication1.csproj
+dotnet publish  --configuration Release --output %temp%\azdevopsautomecicd WebApplication1.csproj
 
 #>
 
 Write-Host "Deploy to $pathtozip"
 
-#DemoWebAppWithCiCd.zip
+#azdevopsautomecicd.zip
 $ctx=Get-AzContext
 az webapp deploy --name $WebAppName --resource-group $ResourceGroup --src-path $pathtozip --type zip --subscription $ctx.Subscription.Id
 az webapp start --name $WebAppName --resource-group $ResourceGroup  --subscription $ctx.Subscription.Id
