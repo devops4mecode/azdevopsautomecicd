@@ -14,12 +14,12 @@ How to publish?
 dotnet publish  --configuration Release --output %temp%\azdevopsautomecicd WebApplication1.csproj
 #>
 #Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
-
-Write-Host "Deploy to $pathtozip"
+$pathWebAppZip=$(pathtozip)
+Write-Host "Deploy to $pathWebAppZip"
 
 #azdevopsautomecicd.zip
 #$ctx=Get-AzContext
 # az webapp deploy --name $WebAppName --resource-group $ResourceGroup --src-path $pathtozip --type zip --subscription $ctx.Subscription.Id
-Publish-AzWebApp -ResourceGroupName $ResourceGroup -Name $WebAppName -ArchivePath $pathtozip
+Publish-AzWebApp -ResourceGroupName $ResourceGroup -Name $WebAppName -ArchivePath $pathWebAppZip
 # az webapp start --name $WebAppName --resource-group $ResourceGroup  --subscription $ctx.Subscription.Id
 Start-AzWebApp -ResourceGroupName $ResourceGroup -Name $WebAppName
