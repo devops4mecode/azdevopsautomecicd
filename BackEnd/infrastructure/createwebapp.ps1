@@ -4,21 +4,23 @@ Set-StrictMode -Version "latest"
 $ErrorActionPreference="Stop"
 
 $NumOfWorkers=2
-$PlanSKu="FREE"
+$PlanSKu="Free"
 
 #Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
 
-$ctx=Get-AzContext
+#$ctx=Get-AzContext
 New-AzResourceGroup -Name $ResourceGroup  -Location $Location -Force
 
 function CreatePlan(){
     Write-Host "Creating plan $PlanName"
-    az appservice plan create --name $PlanName --resource-group $ResourceGroup --sku $PlanSKu --number-of-workers $NumOfWorkers --subscription $ctx.Subscription.Id
+    #az appservice plan create --name $PlanName --resource-group $ResourceGroup --sku $PlanSKu --number-of-workers $NumOfWorkers --subscription $ctx.Subscription.Id
+    New-AzAppServicePlan -ResourceGroupName $ResourceGroup -Name $PlanName -Location $Location -Tier $PlanSKu -NumberofWorkers $NumOfWorkers
 }
 
 function CreateWebApp(){
     Write-Host "Creating Web App $WebAppName"
-    az webapp create --name $WebAppName --plan $PlanName --resource-group $ResourceGroup --subscription $ctx.Subscription.Id    
+    # az webapp create --name $WebAppName --plan $PlanName --resource-group $ResourceGroup --subscription $ctx.Subscription.Id  
+    New-AzWebApp -ResourceGroupName $ResourceGroup  -Name $WebAppName -Location $Location -AppServicePlan $PlanName 
 }
 
 function CreateAppSettings(){
@@ -59,5 +61,5 @@ function AddCORS(){
 CreatePlan
 CreateWebApp
 CreateAppSettings
-RemoveAllExistingCORS
-AddCORS
+# RemoveAllExistingCORS
+# AddCORS

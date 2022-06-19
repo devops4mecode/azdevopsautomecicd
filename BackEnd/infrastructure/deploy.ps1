@@ -18,6 +18,8 @@ dotnet publish  --configuration Release --output %temp%\azdevopsautomecicd WebAp
 Write-Host "Deploy to $pathtozip"
 
 #azdevopsautomecicd.zip
-$ctx=Get-AzContext
-az webapp deploy --name $WebAppName --resource-group $ResourceGroup --src-path $pathtozip --type zip --subscription $ctx.Subscription.Id
-az webapp start --name $WebAppName --resource-group $ResourceGroup  --subscription $ctx.Subscription.Id
+#$ctx=Get-AzContext
+# az webapp deploy --name $WebAppName --resource-group $ResourceGroup --src-path $pathtozip --type zip --subscription $ctx.Subscription.Id
+Publish-AzWebApp -ResourceGroupName $ResourceGroup -Name $WebAppName -ArchivePath $pathtozip
+# az webapp start --name $WebAppName --resource-group $ResourceGroup  --subscription $ctx.Subscription.Id
+Start-AzWebApp -ResourceGroupName $ResourceGroup -Name $WebAppName
