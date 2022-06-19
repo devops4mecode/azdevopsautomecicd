@@ -10,7 +10,8 @@ $environment=$env:ENVIRONMENT
 if ([string]::IsNullOrWhiteSpace($environment)){
     Write-Error -Message "The variable 'environment' was empty"
 }
-$Location="southeastasia"
+# $Location="southeastasia"
+$Location="uksouth"
 $ContainerForStaticContent="`$web"
 $ResourceGroup="rg-demo-frontendwebsite-$environment"
 
