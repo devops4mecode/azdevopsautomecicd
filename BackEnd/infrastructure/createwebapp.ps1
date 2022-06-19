@@ -7,7 +7,14 @@ $NumOfWorkers=2
 $PlanSKu="FREE"
 
 
-$ctx=Get-AzContext
+# $ctx=Get-AzContext
+# Login to Azure 
+# Use the application ID as the username, and the secret as password
+$credentials = Get-Credential
+$TenantId="18c0d54f-628e-4386-97f0-c96cb64d5be8"
+Connect-AzAccount -ServicePrincipal -Credential $credentials -Tenant $TenantId
+
+
 New-AzResourceGroup -Name $ResourceGroup  -Location $Location -Force
 
 function CreatePlan(){
