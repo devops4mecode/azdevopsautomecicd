@@ -14,8 +14,8 @@ How to publish?
 dotnet publish  --configuration Release --output %temp%\azdevopsautomecicd WebApplication1.csproj
 #>
 #Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
-$pathWebAppZip=$(pathtozip)
-Write-Host "Deploy to $pathWebAppZip"
+$pathWebAppZip= '_BackEnd-Build/webappzip/WebApplication1.zip'
+Write-Host "Deploy to WebApp"
 
 #azdevopsautomecicd.zip
 #$ctx=Get-AzContext
