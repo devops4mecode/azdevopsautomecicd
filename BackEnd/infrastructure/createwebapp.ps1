@@ -6,6 +6,18 @@ $ErrorActionPreference="Stop"
 $NumOfWorkers=2
 $PlanSKu="FREE"
 
+
+# Login
+$username = '$(username)'
+$password='$(pwd)'
+
+$SecurePassword = ConvertTo-SecureString $password -AsPlainText -Force
+
+$credentials = New-Object System.Management.Automation.PSCredential($username, $SecurePassword)
+
+Login-AzAccount -Credential $credentials
+
+
 New-AzResourceGroup -Name $ResourceGroup  -Location $Location -Force
 
 function CreatePlan(){

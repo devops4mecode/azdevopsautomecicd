@@ -13,6 +13,17 @@ How to publish?
 ---------------
 dotnet publish  --configuration Release --output %temp%\azdevopsautomecicd WebApplication1.csproj
 #>
+# Login
+Write-Host "Login"
+
+$username = '$(username)'
+$password='$(pwd)'
+
+$SecurePassword = ConvertTo-SecureString $password -AsPlainText -Force
+
+$credentials = New-Object System.Management.Automation.PSCredential($username, $SecurePassword)
+
+Login-AzAccount -Credential $credentials
 
 Write-Host "Deploy to $pathtozip"
 
