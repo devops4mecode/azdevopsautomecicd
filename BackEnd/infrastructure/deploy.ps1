@@ -16,8 +16,8 @@ dotnet publish  --configuration Release --output %temp%\azdevopsautomecicd WebAp
 # Login
 Write-Host "Login"
 
-$username = '$(username)'
-$password='$(pwd)'
+$username = $(username)
+$password =$(pwd)
 
 $SecurePassword = ConvertTo-SecureString $password -AsPlainText -Force
 

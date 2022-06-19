@@ -8,8 +8,8 @@ $PlanSKu="FREE"
 
 
 # Login
-$username = '$(username)'
-$password='$(pwd)'
+$username = $(username)
+$password= $(pwd)
 
 $SecurePassword = ConvertTo-SecureString $password -AsPlainText -Force
 
