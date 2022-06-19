@@ -1,7 +1,7 @@
 Set-StrictMode -Version "latest"
 $ErrorActionPreference="Stop"
-$environment='dev'
-# $environment=$env:ENVIRONMENT
+# $environment='dev'
+$environment=$env:ENVIRONMENT
 if ([string]::IsNullOrWhiteSpace($environment)){
     Write-Error -Message "The variable 'environment' was empty"
 }
