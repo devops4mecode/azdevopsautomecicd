@@ -4,12 +4,12 @@ trigger:
     - master 
   paths: 
     include: 
-    - '/azdevopsautomecicd/FrontEnd/*'
+    - '/FrontEnd/*'
 
 pr: 
   paths: 
     include: 
-    - '/azdevopsautomecicd/FrontEnd/*'
+    - '/FrontEnd/*'
 
 pool:
   name: Azure Pipelines
@@ -27,11 +27,11 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: frontend-pages'
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)/azdevopsautomecicd/FrontEnd/src/public'
+    PathtoPublish: '$(Build.SourcesDirectory)/FrontEnd/src/public'
     ArtifactName: 'frontend-pages'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: infrastructure-script'
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)/azdevopsautomecicd/FrontEnd/infrastructure'
+    PathtoPublish: '$(Build.SourcesDirectory)/FrontEnd/infrastructure'
     ArtifactName: 'infrastructure-script'
