@@ -1,24 +1,51 @@
 param(
     [Parameter(Mandatory=$true)]
-    [string]$pathtozip
+    [string]$pathhtml
     )
 
-. $PSScriptRoot\common.ps1
+Set-StrictMode -Version "latest"
+$ErrorActionPreference="Stop"
 
-<#
-What is the structure of the ZIP file?
---------------------------------------
-The ZIP file should contain the assemblies at the very top level, i.e. not in any subfolder
+$environment=$env:ENVIRONMENT
+if ([string]::IsNullOrWhiteSpace($environment)){
+    Write-Error -Message "The variable 'environment' was empty"
+}
+$Location="southeastasia"
+$ContainerForStaticContent="`$web"
+$ResourceGroup="rg-demo-frontendwebsite-$environment"
 
-How to publish?
----------------
-dotnet publish  --configuration Release --output %temp%\azdevopsautomecicd WebApplication1.csproj
+$StaticSiteStorageAccount="saustorageaccount001$environment"
 
-#>
-
-Write-Host "Deploy to $pathtozip"
-
-#azdevopsautomecicd.zip
 $ctx=Get-AzContext
-az webapp deploy --name $WebAppName --resource-group $ResourceGroup --src-path $pathtozip --type zip --subscription $ctx.Subscription.Id
-az webapp start --name $WebAppName --resource-group $ResourceGroup  --subscription $ctx.Subscription.Id
+
+
+Write-Host "Creating resource group $ResourceGroup at location $Location"
+New-AzResourceGroup -Name $ResourceGroup  -Location $Location -Force
+
+Write-Host "Creating storage account $StaticSiteStorageAccount"
+az storage account create --name $StaticSiteStorageAccount --resource-group $ResourceGroup --location $Location --sku Standard_LRS  --subscription $ctx.Subscription.Id
+
+
+#$stoAccount=Get-AzStorageAccount -ResourceGroupName $ResourceGroup -Name $StaticSiteStorageAccount
+# $webContainer=Get-AzStorageContainer -Name $ContainerForStaticContent -Context $stoAccount.Context -ErrorAction Continue
+# if ($null -ne $webContainer){
+#     Write-Host "Deleting container $ContainerForStaticContent"
+#     Remove-AzStorageContainer -Name $ContainerForStaticContent -Context $stoAccount.Context -Force
+# }
+
+Write-Host "Creating container $ContainerForStaticContent"
+az storage container create --name $ContainerForStaticContent --resource-group $ResourceGroup --account-name $StaticSiteStorageAccount | Out-Null
+
+Write-Host "Setting static web app properties"
+az storage blob service-properties update --account-name $StaticSiteStorageAccount --static-website --404-document "error.html" --index-document "default.html" | Out-Null
+
+Write-Host "Purging existing files in container $ContainerForStaticContent"
+az storage blob delete-batch --account-name $StaticSiteStorageAccount --source $ContainerForStaticContent --pattern *.* 
+
+$Sourcefolder=$pathhtml
+Write-Host "Uploading files from $Sourcefolder"
+az storage blob upload-batch --account-name $StaticSiteStorageAccount --source $Sourcefolder -d '$web'
+
+Write-Host "Complete"
+$acc=Get-AzStorageAccount -ResourceGroupName $ResourceGroup -Name $StaticSiteStorageAccount
+Write-Host ("Endpoint of static site is {0}" -f $acc.PrimaryEndpoints.Web)
