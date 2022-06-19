@@ -13,6 +13,7 @@ How to publish?
 ---------------
 dotnet publish  --configuration Release --output %temp%\azdevopsautomecicd WebApplication1.csproj
 #>
+Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
 
 Write-Host "Deploy to $pathtozip"
 
