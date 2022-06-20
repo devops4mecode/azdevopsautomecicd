@@ -13,6 +13,9 @@ How to publish?
 ---------------
 dotnet publish  --configuration Release --output %temp%\DemoWebAppWithCiCd WebApplication1.csproj
 #>
+$SubsId='c10e0889-ad39-4d65-b6f0-aac9373ac19f'
+$TenantId='18c0d54f-628e-4386-97f0-c96cb64d5be8'
+Set-AzContext -SubscriptionId $SubsId -TenantId $TenantId
 
 Write-Host "Deploy $pathtozip"
 $pathtozip='$(System.DefaultWorkingDirectory)/_BackEnd-Build/webappzip/WebApplication1.zip'

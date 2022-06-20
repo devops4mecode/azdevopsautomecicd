@@ -7,7 +7,9 @@ $NumOfWorkers=2
 $PlanSKu="Free"
 
 #Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
-
+$SubsId='c10e0889-ad39-4d65-b6f0-aac9373ac19f'
+$TenantId='18c0d54f-628e-4386-97f0-c96cb64d5be8'
+Set-AzContext -SubscriptionId $SubsId -TenantId $TenantId
 #$ctx=Get-AzContext
 New-AzResourceGroup -Name $ResourceGroup  -Location $Location -Force
 
