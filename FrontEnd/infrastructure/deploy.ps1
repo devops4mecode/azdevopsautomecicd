@@ -44,9 +44,9 @@ Enable-AzStorageStaticWebsite -IndexDocument $indexdoc -ErrorDocument404Path $er
 Write-Host "Purging existing files in container $ContainerForStaticContent"
 #az storage blob delete-batch --account-name $StaticSiteStorageAccount --source $ContainerForStaticContent --pattern *.* 
 # Get Storage Account Context
-$STORAGE_ACCOUNT = Get-AzStorageAccount -ResourceGroupName $ResourceGroup -AccountName $StaticSiteStorageAccount
-$CONTEXT = $STORAGE_ACCOUNT.Context
-Get-AzStorageBlob -Container '$web' -Blob * -Context $CONTEXT | Remove-AzStorageBlob
+$straccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroup -AccountName $StaticSiteStorageAccount
+$straccountcontext = $straccount.Context
+Get-AzStorageBlob -Container '$web' -Blob * -Context $straccountcontext | Remove-AzStorageBlob
 
 #pathhtml=$(System.DefaultWorkingDirectory)/_FrontEnd-Build/frontend-pages
 $Sourcefolder=$pathhtml
