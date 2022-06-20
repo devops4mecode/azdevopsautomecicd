@@ -21,11 +21,18 @@ $indexdoc="default.html"
 Write-Host "Creating resource group $ResourceGroup at location $Location"
 New-AzResourceGroup -Name $ResourceGroup  -Location $Location -Force
 
-Write-Host "Creating storage account $StaticSiteStorageAccount"
+
 #az storage account create --name $StaticSiteStorageAccount --resource-group $ResourceGroup --location $Location --sku  --subscription $ctx.Subscription.Id
-New-AzStorageAccount -ResourceGroupName $ResourceGroup -Name $StaticSiteStorageAccount -Location $Location -SkuName $sku
 
-
+# Check for storage account and create if not found 
+Write-Host "Check for  $StaticSiteStorageAccount and create if not found"  
+$accstr = Get-AzureRmStorageAccount -Name $StaticSiteStorageAccount -ResourceGroupName $ResourceGroup -ErrorAction Ignore
+if ($null -eq $accstr)  
+{   
+    Write-Host "Creating storage account $StaticSiteStorageAccount"
+    New-AzStorageAccount -ResourceGroupName $ResourceGroup -Name $StaticSiteStorageAccount -Location $Location -SkuName $sku
+}
+Write-Host "Check for $ContainerForStaticContent and create if not found"  
 $stoAccount=Get-AzStorageAccount -ResourceGroupName $ResourceGroup -Name $StaticSiteStorageAccount
 $webContainer=Get-AzStorageContainer -Name $ContainerForStaticContent -Context $stoAccount.Context -ErrorAction Continue
 if ($null -ne $webContainer){
