@@ -14,7 +14,7 @@ $Location="uksouth"
 $ContainerForStaticContent="`$web"
 $ResourceGroup="rg-demo-frontendwebsite-$environment"
 $sku='Standard_LRS'
-$StaticSiteStorageAccount="saustorageaccount001$environment"
+$StaticSiteStorageAccount="ddtuksouthstracc001$environment"
 $errordoc="error.html"
 $indexdoc="default.html"
 
