@@ -13,14 +13,13 @@ How to publish?
 ---------------
 dotnet publish  --configuration Release --output %temp%\DemoWebAppWithCiCd WebApplication1.csproj
 #>
-Write-Host "Deploy $pathtozip"
+
 $pathtozip='$(System.DefaultWorkingDirectory)/_BackEnd-Build/webappzip/WebApplication1.zip'
 #DemoWebAppWithCiCd.zip
 # $ctx=Get-AzContext
-az webapp deploy --name $WebAppName --resource-group $ResourceGroup --src-path $pathtozip --type zip
-az webapp start --name $WebAppName --resource-group $ResourceGroup
-# Write-Host "Publishing WebApp..."
-# Publish-AzWebApp -ResourceGroupName $resourceGroup -Name $webAppName -ArchivePath $pathWebAppZip
-# # az webapp start --name $WebAppName --resource-group $ResourceGroup  --subscription $ctx.Subscription.Id
-# Write-Host "Starting WebApp..."
-# Start-AzWebApp -ResourceGroupName $ResourceGroup -Name $WebAppName
+Write-Host "Publishing WebApp..."
+#az webapp deploy --resource-group $ResourceGroup --name $WebAppName --src-path $pathtozip --type zip --async true
+Publish-AzWebApp -ResourceGroupName $ResourceGroup -Name $WebAppName -ArchivePath (Get-Item $pathtozip).FullName -Force
+Write-Host "Starting WebApp..."
+Start-AzWebApp -ResourceGroupName $ResourceGroup -Name $WebAppName
+#az webapp start --name $WebAppName --resource-group $ResourceGroup
