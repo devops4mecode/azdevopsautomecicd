@@ -14,11 +14,10 @@
             document.querySelector('#btnClearWeatherForecast').addEventListener('click',()=>{
                 ClickHandlers.ClearWeatherForecastHandler(document.getElementById("weatherTableElement"))
             })
-            export const environment=GetEnvironmentFromUrl()
         </script>
     </head>
     <body>
-        <h1>This is a demo page which invokes the REST end point implemented using a C# Azure Webapp In ${environment}</h1>
+        <h1>This is a demo page which invokes the REST end point implemented using a C# Azure Webapp</h1>
         <hr/>
         <form class="form-inline">
             <button type="button" class="btn btn-primary mb-2" id="btnRefreshWeatherForecast">Refresh</button>
