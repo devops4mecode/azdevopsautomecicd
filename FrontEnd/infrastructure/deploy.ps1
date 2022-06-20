@@ -21,11 +21,8 @@ $indexdoc="default.html"
 Write-Host "Creating resource group $ResourceGroup at location $Location"
 New-AzResourceGroup -Name $ResourceGroup  -Location $Location -Force
 
-
-#az storage account create --name $StaticSiteStorageAccount --resource-group $ResourceGroup --location $Location --sku  --subscription $ctx.Subscription.Id
-
 # Check for storage account and create if not found 
-Write-Host "Check for  $StaticSiteStorageAccount and create if not found"  
+Write-Host "Check for $StaticSiteStorageAccount and create if not found"  
 $accstr = Get-AzureRmStorageAccount -Name $StaticSiteStorageAccount -ResourceGroupName $ResourceGroup -ErrorAction Ignore
 if ($null -eq $accstr)  
 {   
@@ -39,11 +36,11 @@ if ($null -ne $webContainer){
     Write-Host "Deleting container $ContainerForStaticContent"
     Remove-AzStorageContainer -Name $ContainerForStaticContent -Context $stoAccount.Context -Force
 }
-
-Write-Host "Creating container $ContainerForStaticContent"
-#az storage container create --name $ContainerForStaticContent --resource-group $ResourceGroup --account-name $StaticSiteStorageAccount | Out-Null
-New-AzRmStorageContainer -ResourceGroupName $ResourceGroup -AccountName $StaticSiteStorageAccount -ContainerName $ContainerForStaticContent
-
+else {
+    Write-Host "Creating container $ContainerForStaticContent"
+    #az storage container create --name $ContainerForStaticContent --resource-group $ResourceGroup --account-name $StaticSiteStorageAccount | Out-Null
+    New-AzRmStorageContainer -ResourceGroupName $ResourceGroup -AccountName $StaticSiteStorageAccount -ContainerName $ContainerForStaticContent
+}
 Write-Host "Setting static web app properties"
 #az storage blob service-properties update --account-name $StaticSiteStorageAccount --static-website --404-document "error.html" --index-document "default.html" | Out-Null
 Enable-AzStorageStaticWebsite -IndexDocument $indexdoc -ErrorDocument404Path $errordoc

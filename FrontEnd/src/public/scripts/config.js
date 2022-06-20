@@ -16,5 +16,5 @@ function GetEnvironmentFromUrl()
 }
 
 export const environment=GetEnvironmentFromUrl()
-export const ProdServerUrl=`https://mydemowebapi123-${environment}.azurewebsites.net`
+export const ProdServerUrl=`https://ddtlab-webapp-${environment}.azurewebsites.net`
 export const WeatherEndpoint=`${ProdServerUrl}/WeatherForecast`;
