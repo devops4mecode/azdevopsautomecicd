@@ -37,5 +37,7 @@ $Sourcefolder=$pathhtml
 Write-Host "Uploading files from $Sourcefolder"
 az storage blob upload-batch --account-name $StaticSiteStorageAccount --source $Sourcefolder -d '$web'
 
-Write-Host "Complete"
+Write-Host "Show Static Web URL"
 az storage account show --name $StaticSiteStorageAccount --resource-group $ResourceGroup --query "primaryEndpoints.web" --output tsv
+
+Write-Host "Complete"
