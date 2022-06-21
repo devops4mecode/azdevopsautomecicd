@@ -13,7 +13,7 @@ pr:
 
 pool:
   name: Azure Pipelines
-#Your build pipeline references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+
 variables:
     BuildConfiguration: Release
     MajorVersion: 2
@@ -23,20 +23,6 @@ variables:
 name: $(MajorVersion).$(MinorVersion).$(PatchNumber).$(Rev:r)
 
 steps:
-- powershell: |
-   # Write your PowerShell commands here.   
-   Write-Host "Hello World - dumping all variables"   
-   dir env:   
-   Write-Host "Hello World - dumping all variables complete"
-   
-- powershell: |
-   # Write your PowerShell commands here.   
-   Write-Host "Dumping all directories begin"
-   dir -Recurse   
-   Write-Host "Dumping all directories complete"
-- powershell: |
-   # Testing Powershell
-   dotnet --version
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
@@ -77,10 +63,3 @@ steps:
     ArtifactName:  'infrastructure-scripts'
     PathtoPublish: '$(build.sourcesdirectory)/BackEnd/infrastructure/'
   condition: succeededOrFailed()
-
-# - task: PublishBuildArtifacts@1
-#   displayName: 'Publish deployment PS script'
-#   inputs:
-#     ArtifactName:  'deploy'
-#     PathtoPublish: '$(build.sourcesdirectory)/BackEnd/infrastructure/'
-#   condition: succeededOrFailed()
