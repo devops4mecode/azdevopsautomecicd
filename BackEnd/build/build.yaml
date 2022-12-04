@@ -13,6 +13,7 @@ pr:
 
 pool:
   name: Azure Pipelines
+  vmImage: 'windows-2022'
 
 variables:
     BuildConfiguration: Release
@@ -35,11 +36,6 @@ steps:
     projects: '$(build.sourcesdirectory)/BackEnd/**/*.csproj'
     arguments: '--configuration $(BuildConfiguration)'
 
-- task: VisualStudioTestPlatformInstaller@1
-  displayName: "VsTest Platform Installer"
-  inputs:
-    versionSelector: "SpecificVersion"
-    testPlatformVersion: "17.2.0"
 - task: DotNetCoreCLI@2
   displayName: Test
   inputs:
