@@ -38,9 +38,8 @@ namespace WebApplication1.Controllers
             })
             .ToArray();
 
-            _logger.LogInformation($"Found {WeatherForecast.Length} weather information records");
-            return WeatherForecast;
-
+            _logger.LogInformation($"Found {weatherForecast.Length} weather information records");
+            return weatherForecast;
         }
     }
 }
