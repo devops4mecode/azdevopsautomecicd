@@ -37,6 +37,9 @@ namespace WebApplication1.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+            _logger.LogInformation($"Found {weatherForecast.Length} weather information records");
+            return weatherForecast;
+
         }
     }
 }
