@@ -40,4 +40,5 @@ namespace WebApplication1.Controllers
             _logger.LogInformation($"Found {weatherForecast.Length} weather information records");
             return weatherForecast;
     }
+    }
 }
